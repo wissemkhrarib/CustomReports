@@ -1,213 +1,167 @@
 ﻿
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
 @using CustomReports.Models
 @model Bloc
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Dark Bootstrap Admin by Bootstrapious.com</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="all,follow">
-    <!-- Bootstrap CSS-->
-    <link rel="stylesheet" href="~/Scripts/vendor/bootstrap/css/bootstrap.min.css">
-    <!-- Font Awesome CSS-->
-    <link href="~/Scripts/vendor/chart.js/Chart.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/Content/vendor/font-awesome/css/font-awesome.min.css">
-    <!-- Custom Font Icons CSS-->
 
-    <link rel="stylesheet" href="~/Content/GridStack/css/font.css">
-    <!-- Google fonts - Muli-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,700">
-    <!-- theme stylesheet-->
-    <link rel="stylesheet" href="~/Content/GridStack/css/style.default.css" id="theme-stylesheet">
-    <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="~/Content/GridStack/css/custom.css">
-    <!-- Favicon-->
-    <link rel="shortcut icon" href="~/Content/img/favicon.ico">
-    <!-- Tweaks for older IEs-->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
-    <!--For the grid stack-->
-    <link rel="stylesheet" href="~/Content/GridStack/gridstack.css" />
-</head>
-<body>
-    <header class="header">
-        <nav class="navbar navbar-expand-lg">
-            <div class="search-panel">
-                <div class="search-inner d-flex align-items-center justify-content-center">
-                    <div class="close-btn">Close <i class="fa fa-close"></i></div>
-                    <form id="searchForm" action="#">
-                        <div class="form-group">
-                            <input type="search" name="search" placeholder="What are you searching for...">
-                            <button type="submit" class="submit">Search</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="container-fluid d-flex align-items-center justify-content-between">
-                <div class="navbar-header">
-                    <!-- Navbar Header--><a class="navbar-brand">
-                        <div class="brand-text brand-big visible text-uppercase"><strong class="text-primary">Repo</strong><strong>rts</strong></div>
-                        <div class="brand-text brand-sm"><strong class="text-primary">D</strong><strong>A</strong></div>
-                    </a>
-                    <!-- Sidebar Toggle Btn-->
-                    <button class="sidebar-toggle"><i class="fa fa-long-arrow-left"></i></button>
-                    <a class="btn btn-success rounded m-2 text-white" href="/Report/Index">
-                        <i class="fa fa-files-o" aria-hidden="true"></i>
-                        Reports
-                    </a>
-                    <button onclick="updateBlocs()" class="btn btn-success rounded m-2">
-                        <i class="fa fa-check-circle" aria-hidden="true"></i>
-                        Save Changes
-                    </button>
-                    <a class="btn btn-success rounded m-2 text-white" href="/Report/Delete/@Model.Id">
-                        <i class="fa fa-trash" aria-hidden="true"></i>
-                        Delete
-                    </a>
-                    <button class="btn btn-success rounded text-white m-2" onclick="addBloc(@Model.Id)">
-                        <i class="fa fa-plus" aria-hidden="true"></i>
-                        New Bloc
-                    </button>
-                </div>
-                <div class="right-menu list-inline no-margin-bottom">
-
-
-                    <!-- Log out               -->
-                    <div class="list-inline-item logout"><a id="logout" href="/Account/Logout" class="nav-link"> <span class="d-none d-sm-inline">Logout </span><i class="icon-logout"></i></a></div>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="d-flex align-items-stretch">
-        <!-- Sidebar Navigation-->
-        <nav id="sidebar">
-            <!-- Sidebar Header-->
-            <div class="sidebar-header d-flex align-items-center">
-                <div class="avatar"><img src="~/Content/img/avatar-6.jpg" alt="..." class="img-fluid rounded-circle"></div>
-                <div class="title">
-                    <h1 class="h5">Mark Stephen</h1>
-                    <p>Web Designer</p>
-                </div>
-            </div>
-            <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
-            <ul class="list-unstyled">
-                <li>
-                    <a href="#labels" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>LABELS </a>
-                    <ul id="labels" class="collapse list-unstyled ">
-                        <li id="days" class="draggable" style="z-index: 200;"><a href="#">DAYS</a></li>
-                        <li id="names" class="draggable" style="z-index: 200;"><a href="#">NAMES</a></li>
-                        <li id="companies" class="draggable" style="z-index: 200;"><a href="#">COMPANIES</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#table1" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>TABEL1 </a>
-                    <ul id="table1" class="collapse list-unstyled ">
-                        <li id="item1" class="draggable" style="z-index: 200;"><a href="#">ITEM1</a></li>
-                        <li id="item2" class="draggable" style="z-index: 200;"><a href="#">ITEM2</a></li>
-                        <li id="item3" class="draggable" style="z-index: 200;"><a href="#">ITEM3</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#table2" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>TABLE2 </a>
-                    <ul id="table2" class="collapse list-unstyled ">
-                        <li id="item4" class="draggable" style="z-index: 200;"><a href="#">ITEM4</a></li>
-                        <li id="item5" class="draggable" style="z-index: 200;"><a href="#">ITEM5</a></li>
-                        <li id="item6" class="draggable" style="z-index: 200;"><a href="#">ITEM6</a></li>
-                    </ul>
-                </li>
-                <li><a href="login.html"> <i class="icon-logout"></i>Login page </a></li>
-            </ul><span class="heading">Extras</span>
-            <ul class="list-unstyled">
-                <li> <a href="#"> <i class="icon-settings"></i>Demo </a></li>
-                <li> <a href="#"> <i class="icon-writing-whiteboard"></i>Demo </a></li>
-                <li> <a href="#"> <i class="icon-chart"></i>Demo </a></li>
-            </ul>
-        </nav>
-        <!-- Sidebar Navigation end-->
-        <div class="page-content bg-light">
-            <!-- Page Header-->
-            <!-- Breadcrumb-->
-
-            <section class="no-padding-top">
-                <div class="container-fluid">
-                    <div class="row mt-3">
-                        <div class="col-lg-4 bg-light">
-                            <div class="block bg-white rounded">
-                                <div class="title border rounded p-2 border-danger"><p class="text-danger text-center">X-AXIS DATA</p></div>
-                                <div class="table-responsive">
-                                    <ul id="X" class="droppable bg-light list-group overflow-auto" style="height:200px;">
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 bg-light">
-                            <div class="block bg-white rounded">
-                                <div class="title border rounded p-2 border-danger"><p class="text-danger text-center">Y-AXIS DATA</p></div>
-                                <div class="table-responsive">
-                                    <ul id="Y" class="droppable bg-light list-group overflow-auto" style="height:200px;">
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="block bg-white rounded">
-                                <div class="title border rounded p-2 border-danger"><p class="text-danger text-center">Filter By</p></div>
-                                <div class="table-responsive">
-                                    <ul id="F" class="droppable bg-light list-group overflow-auto" style="height:200px;">
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+<div class="row w-100 h-100 overflow-hidden p-0 m-0">
+    <div class="col-lg-5 min-vh-100 bg-light">
+        <div class="row">
+            <div class="col border border-info rounded bg-light m-2" style="height:550px;">
+                <p class="text-info font-weight-bold text-center mt-2">
+                    <i class="fa fa-database" aria-hidden="true"></i>
+                    Available Data
+                </p>
+                <div>
+                    <div class="border border-info rounded m-1">
+                        <a class="btn btn-block btn-info" href="#labels" aria-expanded="false" data-toggle="collapse">
+                            <i class="fa fa-table" aria-hidden="true"></i>
+                            LABELS
+                        </a>
+                        <ul id="labels" class="collapse list-unstyled p-3">
+                            <li id="days" class="text-center text-white font-weight-bold bg-info border border-white draggable" style="z-index: 200;"> DAYS </li>
+                            <li id="names" class="text-center text-white font-weight-bold bg-info border border-white draggable" style="z-index: 200;"> NAMES </li>
+                            <li id="companies" class="text-center text-white font-weight-bold bg-info border border-white draggable" style="z-index: 200;"> COMPANIES </li>
+                        </ul>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="block bg-white margin-bottom-sm">
-                                <div class="title"><strong>Charts Types</strong></div>
-                                <ul class="justify-content-center overflow-auto" style="height:200px;">
-                                    <li class="list-group-item m-2"><canvas id="bar" style="display: block; width: 150px; height: 70px;" class="chartjs-render-monitor bg-light chart-type"></canvas></li>
-                                    <li class="list-group-item m-2"><canvas id="line" style="display: block; width: 150px; height: 100px;" class="chartjs-render-monitor bg-light chart-type"></canvas></li>
-                                    <li class="list-group-item m-2"><canvas id="pie" style="display: block; width: 150px; height: 100px;" class="chartjs-render-monitor bg-light chart-type"></canvas></li>
-                                    <li class="list-group-item m-2"><canvas id="doughnut" style="display: block; width: 150px; height: 100px;" class="chartjs-render-monitor bg-light chart-type"></canvas></li>
-                                    <li class="list-group-item m-2"><canvas id="area" style="display: block; width: 150px; height: 100px;" class="chartjs-render-monitor bg-light chart-type"></canvas></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="line-chart block bg-white chart">
-                                <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                                <div class="title"><strong>Line Chart Example</strong></div>
-                                <canvas id="new-chart" style="display: block; width: 621px; height: 310px;" width="621" height="310" class="chartjs-render-monitor bg-light rounded"></canvas>
-                            </div>
-                        </div>
+                    <div class="border border-info rounded m-1">
+                        <a href="#table1" class="btn btn-block btn-info " aria-expanded="false" data-toggle="collapse">
+                            <i class="fa fa-table" aria-hidden="true"></i>
+                            TABEL1
+                        </a>
+                        <ul id="table1" class="collapse list-unstyled p-3">
+                            <li id="item1" class="text-center text-white font-weight-bold bg-info border border-white draggable" style="z-index: 200;"> ITEM1 </li>
+                            <li id="item2" class="text-center text-white font-weight-bold bg-info border border-white draggable" style="z-index: 200;"> ITEM2 </li>
+                            <li id="item3" class="text-center text-white font-weight-bold bg-info border border-white draggable" style="z-index: 200;"> ITEM3 </li>
+                        </ul>
                     </div>
+                    <div class="border border-info rounded m-1">
+                        <a href="#table2" class="btn btn-block btn-info " aria-expanded="false" data-toggle="collapse">
+                            <i class="fa fa-table" aria-hidden="true"></i>
+                            TABLE2
+                        </a>
+                        <ul id="table2" class="collapse list-unstyled p-3">
+                            <li id="item4" class="text-center text-white font-weight-bold bg-info border border-white draggable" style="z-index: 200;"> ITEM4 </li>
+                            <li id="item5" class="text-center text-white font-weight-bold bg-info border border-white draggable" style="z-index: 200;"> ITEM5 </li>
+                            <li id="item6" class="text-center text-white font-weight-bold bg-info border border-white draggable" style="z-index: 200;"> ITEM6 </li>
+                        </ul>
 
-                </div>
-            </section>
-            <footer class="footer">
-                <div class="footer__block block no-margin-bottom">
-                    <div class="container-fluid text-center">
-                        <!-- Please do not remove the backlink to us unless you support us at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
-                        <p class="no-margin-bottom">2020 &copy; Your company. Design by <a href="https://bootstrapious.com/p/bootstrap-4-dark-admin">Bootstrapious</a>.</p>
                     </div>
                 </div>
-            </footer>
+            </div>
+            <div class="col border border-info rounded bg-light m-2" style="height:550px;">
+                <p class="text-info font-weight-bold text-center mt-2">
+                    <i class="fa fa-database" aria-hidden="true"></i>
+                    Available Data
+                </p>
+                <div>
+                    <div class="border border-info rounded m-1">
+                        <a class="btn btn-block btn-info" href="#labels" aria-expanded="false" data-toggle="collapse">
+                            <i class="fa fa-table" aria-hidden="true"></i>
+                            LABELS
+                        </a>
+                        <ul id="labels" class="collapse list-unstyled p-3">
+                            <li id="days" class="text-center text-white font-weight-bold bg-info border border-white draggable" style="z-index: 200;"> DAYS </li>
+                            <li id="names" class="text-center text-white font-weight-bold bg-info border border-white draggable" style="z-index: 200;"> NAMES </li>
+                            <li id="companies" class="text-center text-white font-weight-bold bg-info border border-white draggable" style="z-index: 200;"> COMPANIES </li>
+                        </ul>
+                    </div>
+                    <div class="border border-info rounded m-1">
+                        <a href="#table1" class="btn btn-block btn-info " aria-expanded="false" data-toggle="collapse">
+                            <i class="fa fa-table" aria-hidden="true"></i>
+                            TABEL1
+                        </a>
+                        <ul id="table1" class="collapse list-unstyled p-3">
+                            <li id="item1" class="text-center text-white font-weight-bold bg-info border border-white draggable" style="z-index: 200;"> ITEM1 </li>
+                            <li id="item2" class="text-center text-white font-weight-bold bg-info border border-white draggable" style="z-index: 200;"> ITEM2 </li>
+                            <li id="item3" class="text-center text-white font-weight-bold bg-info border border-white draggable" style="z-index: 200;"> ITEM3 </li>
+                        </ul>
+                    </div>
+                    <div class="border border-info rounded m-1">
+                        <a href="#table2" class="btn btn-block btn-info " aria-expanded="false" data-toggle="collapse">
+                            <i class="fa fa-table" aria-hidden="true"></i>
+                            TABLE2
+                        </a>
+                        <ul id="table2" class="collapse list-unstyled p-3">
+                            <li id="item4" class="text-center text-white font-weight-bold bg-info border border-white draggable" style="z-index: 200;"> ITEM4 </li>
+                            <li id="item5" class="text-center text-white font-weight-bold bg-info border border-white draggable" style="z-index: 200;"> ITEM5 </li>
+                            <li id="item6" class="text-center text-white font-weight-bold bg-info border border-white draggable" style="z-index: 200;"> ITEM6 </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col border border-info rounded bg-light m-2 overflow-auto" style="height:550px;">
+                <p class="text-info font-weight-bold text-center mt-2">
+                    <i class="fa fa-line-chart" aria-hidden="true"></i>
+                    Chart Data
+                </p>
+                <div class="border border-info rounded m-1">
+                    <div class="block bg-white rounded">
+                        <p class="text-info font-weight-bold text-center py-2 my-0">X-AXIS DATA</p>
+                        <div class="table-responsive">
+                            <ul id="X" class="droppable list-unstyled m-0 bg-info overflow-auto" style="height:120px;">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="border border-info rounded m-1">
+                    <div class="block bg-white rounded">
+                        <p class="text-info font-weight-bold text-center py-2 my-0">Y-AXIS DATA</p>
+                        <div class="table-responsive">
+                            <ul id="Y" class="droppable list-unstyled m-0 bg-info overflow-auto" style="height:120px;">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="border border-info rounded m-1">
+                    <div class="block bg-white rounded">
+                        <p class="text-info font-weight-bold text-center py-2 my-0">Filter By</p>
+                        <div class="table-responsive">
+                            <ul id="F" class="droppable list-unstyled m-0 bg-info overflow-auto" style="height:120px;">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <!-- JavaScript files-->
-    <script src="~/Scripts/vendor/jquery/jquery.min.js"></script>
-    <script src="~/Scripts/vendor/popper.js/umd/popper.min.js"></script>
-    <script src="~/Scripts/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="~/Scripts/vendor/jquery.cookie/jquery.cookie.js"></script>
-    <script src="~/Scripts/vendor/jquery-validation/jquery.validate.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gridstack@1.1.2/dist/gridstack.all.js"></script>
-    <script src="~/Scripts/vendor/chart.js/Chart.min.js"></script>
-    <script src="~/Scripts/GridStack/editBloc.js"></script>
-    <script src="~/Scripts/GridStack/sweetalert.min.js"></script>
-</body>
-</html>
+    <div class="col-lg-7 bg-light shadow p-0 ">
+        <div class="d-flex">
+            <button class="btn btn-info m-1">  
+                <i class="fa fa-ban" aria-hidden="true"></i>
+                Cancel
+            </button>
+            <button class="btn btn-info m-1">
+                <i class="fa fa-check-circle" aria-hidden="true"></i>
+                Save
+            </button>
+
+        </div>
+        <div class="d-flex py-2 m-0 overflow-auto">
+            <i id="line" title="Line" class="fa fa-line-chart bg-white p-1 mx-1 chart-type text-info" style="font-size:110px" aria-hidden="true"></i>
+            <i id="bar" title="Bar" class="fa fa-bar-chart bg-white p-1 mx-1 chart-type text-info" style="font-size:110px" aria-hidden="true"></i>
+            <i id="area" title="Area" class="fa fa-area-chart bg-white p-1 chart-type mx-1 text-info" style="font-size:110px" aria-hidden="true"></i>
+            <img id="horizontalBar" title="Horizontal Bar" src="~/Content/img/horizontal-bar-chart_.svg" class="p-1 mx-1 chart-type" style="height:120px;background-color:white;" />
+            <img id="radar" title="Radar" src="~/Content/img/spider-chart.svg"class="p-1 mx-1 bg-white chart-type" style="height:120px;" />
+            <i id="pie" title="Pie" class="fa fa-pie-chart bg-white p-1 mx-1 chart-type text-info" style="font-size:110px" aria-hidden="true"></i>
+            <img id="donut" title="Donut" src="~/Content/img/donut-chart.svg" class="svg p-1 mx-1 chart-type" style="height:120px;background-color:white;" />
+        </div>
+        <div class="bg-info p-3">
+            <div class="bg-white rounded h-75 w-75 p-2">
+                <p class="text-info font-weight-bold m-1 p-1"> @Model.Title </p>
+                <hr />
+                <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                <canvas id="new-chart" style="display: block; width: 621px; height: 310px;" width="621" height="310" class="chartjs-render-monitor"></canvas>
+            </div>
+        </div>
+</div>
+</div>
+<script src="~/Scripts/chart.js/Chart.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="~/Scripts/GridStack/popper.min.js"></script>
+<script src="~/lib/twitter-bootstrap/js/bootstrap.min.js"></script>
+<script src="~/Scripts/GridStack/font-awsome.js"></script>
+<script src="~/Scripts/GridStack/editBloc.js"></script>

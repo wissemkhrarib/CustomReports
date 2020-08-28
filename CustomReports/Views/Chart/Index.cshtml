@@ -1,0 +1,18 @@
+﻿﻿<div id="chart"></div>
+<script>
+    $("#chart").kendoChart({
+        title: "",
+        dataSource: {
+            transport: {
+                read: {
+                    url: "Blocs_Read"
+                }
+            }
+        },
+        seriesDefaults: {
+			type: "area"
+		},
+		series: [		],
+    })
+</script>
+

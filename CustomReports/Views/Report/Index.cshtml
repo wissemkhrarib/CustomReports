@@ -1,32 +1,38 @@
-﻿@using CustomReports.Models
+﻿
+@{
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+@using CustomReports.Models
 @model List<Report>
-<a class="btn btn-success" href="/Report/Create">New Report</a>
-<h1 class="text-black">Available Reports</h1>
+<div class="container py-3 bg-white">
+    <a class="btn btn-success" href="/Report/Create">New Report</a>
+    <h1 class="text-black">Available Reports</h1>
 
-<table class="table">
-    <thead>
-        <tr class=" text-black">
-            <th>Id</th>
-            <th>Report Name</th>
-            <th>Cube Name</th>
-            <th>Customers</th>
-            <th>Edit Report</th>
-            <th>Delete Report</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var report in Model)
-        {
-            <tr id="@report.Id" class="text-black">
-                <th> @report.Id</th>
-                <td> @report.ReportName</td>
-                <td> @report.CubeName</td>
-                <td><form action="/Report/Details/@report.Id"><button class="btn btn-success">Customers</button></form></td>
-                <td>
-                    <a class="btn btn-info" href="/Report/Edit/@report.Id"> Edit </a>
-                </td>
-                <td><button class="btn btn-danger" onclick="deleteItem(@report.Id,'Delete','Report')"> Delete </button></td>
+    <table class="table">
+        <thead>
+            <tr class=" text-black">
+                <th>Id</th>
+                <th>Report Name</th>
+                <th>Cube Name</th>
+                <th>Customers</th>
+                <th>Edit Report</th>
+                <th>Delete Report</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var report in Model)
+            {
+                <tr id="@report.Id" class="text-black">
+                    <th> @report.Id</th>
+                    <td> @report.ReportName</td>
+                    <td> @report.CubeName</td>
+                    <td><form action="/Report/Details/@report.Id"><button class="btn btn-success">Customers</button></form></td>
+                    <td>
+                        <a class="btn btn-info" href="/Report/Edit/@report.Id"> Edit </a>
+                    </td>
+                    <td><button class="btn btn-danger" onclick="deleteItem(@report.Id,'Delete','Report')"> Delete </button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

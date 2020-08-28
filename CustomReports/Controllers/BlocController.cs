@@ -25,11 +25,12 @@ namespace CustomReports.Controllers
         }
 
         [HttpGet]
-        public JsonResult Create(int id, string title)
+        public JsonResult Create(int id, string title,string headerColor)
         {
             var bloc = new Bloc();
             bloc.Title = title;
             bloc.ReportId = id;
+            bloc.HeaderColor = headerColor;
             bloc.X = 0;
             bloc.W = 12;
             bloc.H = 4;

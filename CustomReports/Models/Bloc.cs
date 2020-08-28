@@ -33,6 +33,9 @@ namespace CustomReports.Models
         [StringLength(50)]
         public string Title { get; set; }
 
+        [StringLength(50)]
+        public string HeaderColor { get; set; }
+
         public virtual Report Report { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

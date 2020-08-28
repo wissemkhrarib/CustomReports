@@ -8,7 +8,7 @@ namespace CustomReports.Models
     public partial class ReportsDbContext : DbContext
     {
         public ReportsDbContext()
-            : base("name=ReportsDb")
+            : base("name=ReportsDbContext")
         {
         }
 

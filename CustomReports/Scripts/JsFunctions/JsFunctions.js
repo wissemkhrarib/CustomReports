@@ -9,7 +9,7 @@
 					  $("#" + id).remove();
 					  console.log("success");
 					}
-			  });
+	});
 	
 }
 

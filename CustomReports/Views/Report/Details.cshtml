@@ -1,28 +1,33 @@
-﻿@model  CustomReports.Models.Report
-<h1>Report ID : @Model.Id</h1>
-<h1>Report Name : @Model.ReportName</h1>
-<h1>Cube Name : @Model.CubeName</h1>
-<h1>Number Of Customers:  @Model.CustomerReports.Count</h1>
-<hr />
+﻿@{
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+@model  CustomReports.Models.Report
+<div class="container bg-white py-3">
+    <h1>Report ID : @Model.Id</h1>
+    <h1>Report Name : @Model.ReportName</h1>
+    <h1>Cube Name : @Model.CubeName</h1>
+    <h1>Number Of Customers:  @Model.CustomerReports.Count</h1>
+    <hr />
 
-<h1>List Of Customers</h1>
-<table class="table">
-    <thead>
-        <tr class="text-black">
-            <td>Customer ID</td>
-            <td>Delete</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.CustomerReports)
-        {
-            <tr id="@item.Id" class="text-black">
-                <td>@item.Customer.Id</td>
-                <td>
-                    <button onclick="deleteItem(@item.Id,'Delete','CustomerReport')" class="btn btn-danger"> Delete </button>
-                </td>
+    <h1>List Of Customers</h1>
+    <table class="table">
+        <thead>
+            <tr class="text-black">
+                <td>Customer ID</td>
+                <td>Delete</td>
             </tr>
-        }
-    </tbody>
-</table>
-@Html.ActionLink("Add Customer", "Add", "CustomerReport", new { id=Model.Id}, new { @class = "btn btn-success" })
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CustomerReports)
+            {
+                <tr id="@item.Id" class="text-black">
+                    <td>@item.Customer.Id</td>
+                    <td>
+                        <button onclick="deleteItem(@item.Id,'Delete','CustomerReport')" class="btn btn-danger"> Delete </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @Html.ActionLink("Add Customer", "Add", "CustomerReport", new { id = Model.Id }, new { @class = "btn btn-success" })
+</div>

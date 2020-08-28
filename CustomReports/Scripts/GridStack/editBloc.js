@@ -1,4 +1,4 @@
-var rgbColors = ["rgb(255,0,0)", "rgb(0,255,0)", "rgb(0,0,255)", "rgb(255,255,0)", "rgb(0,255,255)", "rgb(255,0,255)", "rgb(0,0,128)"];
+var Colors = [['#000066', 'rgba(0, 0, 102,0.5)'], ['#FF007F', 'rgba(255, 0, 127,0.5)'], ['#00CC00', 'rgba(0, 204, 0,0.5)'], ['#FF0000', 'rgba(255, 0, 0,0.5)'], ['#FFFF00', 'rgba(255, 255, 0,0.5)'], ['#990099', 'rgba(153, 0, 153,0.5)'], ['#1EBA86', 'rgba(30, 186, 134,0.5)']];
 var someData = {
     labels: {
         days: ["Mond", "Tues", "Thurs", "Frid", "Satur", "Sun"],
@@ -16,156 +16,45 @@ var someData = {
         item6: [65, 10, 14, 36, 87, 78, 44]
     }
 };
-var barChart = $('#bar');
-var lineChart = $('#line');
-var areaChart = $('#area');
-var pieChart = $("#pie");
-var doughnutChart = $("#doughnut");
 var datasets = [
     {
         label: "Data Set Two",
-        fill: false,
-        lineTension: 0,
-        backgroundColor: "#1C5ED1",
-        borderColor: "rgba(98, 98, 98, 0.5)",
-        borderCapStyle: 'butt',
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderJoinStyle: 'miter',
-        borderWidth: 1,
-        pointBorderColor: "rgba(98, 98, 98, 0.5)",
-        pointBackgroundColor: "#f95",
-        pointHoverBackgroundColor: "#B51F1F",
-        pointHoverBorderColor: "rgba(98, 98, 98, 0.5)",
-        pointHoverBorderWidth: 2,
-        pointRadius: 1,
-        pointHitRadius: 10,
+        fill: true,
         data: [0, 30, 22, 20, 35, 125, 50],
-        spanGaps: false
+        borderColor: Colors[0][0],
+        backgroundColor: Colors[0][1],
+        pointBackgroundColor: "#f95",
+        borderWidth:3
+
+    }, {
+        label: "Data Set Three",
+        fill: true,
+        data: [0, 10, 42, 16, 75, 15, 59],
+        borderColor: Colors[1][0],
+        backgroundColor: Colors[1][1],
+        pointBackgroundColor: "#f95",
+        borderWidth: 3
     }
-];
+]
 var labels = ["January", "February", "March", "April", "May", "June", "July"];
-var myBarChart = new Chart(barChart, {
-    type: 'bar',
-    data: {
-        labels: labels,
-        datasets: datasets
-    }
-});
-var myLineChart = new Chart(lineChart, {
-    type: 'line',
-    data: {
-        labels: labels,
-        datasets: datasets
-    }
-});
-var myPieChart = new Chart(pieChart, {
-    type: 'pie',
-    data: {
-        datasets: [{
-            backgroundColor: rgbColors,
-            data: [10, 20, 30]
-        }],
-        // These labels appear in the legend and in the tooltips when hovering different arcs
-        labels: [
-            'Red',
-            'Yellow',
-            'Blue'
-        ]
-    }
-});
-var myDoughnutChart = new Chart(doughnutChart, {
-    type: 'doughnut',
-    data: {
-        datasets: [{
-            backgroundColor: rgbColors,
-            data: [10, 20, 30]
-        }],
-        // These labels appear in the legend and in the tooltips when hovering different arcs
-        labels: [
-            'Red',
-            'Yellow',
-            'Blue'
-        ]
-    }
-});
-var myAreaChart = new Chart(areaChart, {
-    type: 'line',
-    data: {
-        labels: labels,
-        datasets: [
-            {
-                label: "Data Set Two",
-                fill: true,
-                lineTension: 0,
-                backgroundColor: "#D423E1",
-                borderColor: "rgba(98, 98, 98, 0.5)",
-                borderCapStyle: 'butt',
-                borderDash: [],
-                borderDashOffset: 0.0,
-                borderJoinStyle: 'miter',
-                borderWidth: 1,
-                pointBorderColor: "rgba(98, 98, 98, 0.5)",
-                pointBackgroundColor: "#f95",
-                pointHoverBackgroundColor: "#B51F1F",
-                pointHoverBorderColor: "rgba(98, 98, 98, 0.5)",
-                pointHoverBorderWidth: 2,
-                pointRadius: 1,
-                pointHitRadius: 10,
-                data: [0, 30, 22, 20, 35, 125, 50],
-                spanGaps: false
-            }
-        ]
-    }
-});
-
-
 var newChartContext = $('#new-chart');
 var newChart = new Chart(newChartContext, {
-    type: "bar",
+    type: "line",
     data: {
         labels: labels,
-        datasets: [
-            {
-                label: "Data Set Two",
-                fill: false,
-                lineTension: 0,
-                backgroundColor: "#B51F1F",
-                borderColor: "rgba(98, 98, 98, 0.5)",
-                borderCapStyle: 'butt',
-                borderDash: [],
-                borderDashOffset: 0.0,
-                borderJoinStyle: 'miter',
-                borderWidth: 1,
-                pointBorderColor: "rgba(98, 98, 98, 0.5)",
-                pointBackgroundColor: "#f95",
-                pointHoverBackgroundColor: "#B51F1F",
-                pointHoverBorderColor: "rgba(98, 98, 98, 0.5)",
-                pointHoverBorderWidth: 2,
-                pointRadius: 1,
-                pointHitRadius: 10,
-                data: [0, 30, 22, 20, 35, 125, 50],
-                spanGaps: false
-            }
-        ]
+        datasets: datasets
     }
 });
-console.log(newChart);
 //choose chart type
-var XData, YData = [], FData = [];
-var draggedElt = [];
-var parentId;
-var droppableElt;
-var cmp = 0;
-var chartData = [];
-chartData["data"] = [];
-
-chartData["data"]["datasets"] = [];
 $('.chart-type').click(function () {
     var type = $(this).attr("id");
     newChart = changeType(newChartContext, type, labels, datasets);
     console.log(type);
 })
+//------------
+var YData = [], FData = [], draggedElt = [];
+var droppableElt, parentId;
+var cmp = 2;
 //
 
 //drag and drop
@@ -183,52 +72,32 @@ $(".droppable").droppable({
         droppableElt = $(this).attr("id");
         switch (droppableElt) {
             case "X":
-                XData = draggedElt[1];
                 var labels = someData["labels"][draggedElt[0]];
-                console.log(labels);
                 changeLabels(newChart, labels);
                 $(this).empty();
-                $(this).append("<li class='list-group-item bg-dark text-white x-draggable'>" + draggedElt[1] + "</li>");
+                $(this).append("<li class='border bg-white border-info text-center text-info p-0 x-draggable'>" + draggedElt[1] + "</li>");
                 break;
             case "Y":
                 if (!(YData.includes(draggedElt[0]))) {
                     YData.push(draggedElt[0]);
                     var newDataset = {
-                        label: "Data Set Two",
-                        fill: true,
-                        lineTension: 0,
-                        backgroundColor: "#B51F1F",
-                        borderColor: "rgba(98, 98, 98, 0.5)",
-                        borderCapStyle: 'butt',
-                        borderDash: [],
-                        borderDashOffset: 0.0,
-                        borderJoinStyle: 'miter',
-                        borderWidth: 1,
-                        pointBorderColor: "rgba(98, 98, 98, 0.5)",
+                        label: draggedElt[1],
+                        fill: newChart.data.datasets[0].fill,
+                        data: someData[parentId][draggedElt[0]],
+                        borderColor: Colors[cmp][0],
+                        backgroundColor: Colors[cmp][1],
                         pointBackgroundColor: "#f95",
-                        pointHoverBackgroundColor: "#B51F1F",
-                        pointHoverBorderColor: "rgba(98, 98, 98, 0.5)",
-                        pointHoverBorderWidth: 2,
-                        pointRadius: 1,
-                        pointHitRadius: 10,
-                        data: [0, 30, 22, 20, 35, 125, 50],
-                        spanGaps: false
+                        borderWidth: 3
                     }
-                    console.log(draggedElt[0], draggedElt[1]);
-                    newDataset["label"] = draggedElt[1];
-                    newDataset["backgroundColor"] = rgbColors[cmp];
-                    newDataset["data"] = someData[parentId][draggedElt[0]];
                     addData(newChart, datasets, newDataset);
                     cmp += 1;
-                    console.log(newDataset);
-                    console.log(newChart);
-                    $(this).append("<li class='list-group-item bg-dark text-white x-draggable'>" + draggedElt[1] + "</li>");
+                    $(this).append("<li class='border border-white text-center text-light bg-dark p-0 x-draggable' style='border-raduis:0px;'>" + draggedElt[1] + "</li>");
                 }
                 break;
             case "F":
                 if (!(FData.includes(draggedElt[0]))) {
                     FData.push(draggedElt[0]);
-                    $(this).append("<li class='list-group-item bg-dark text-white x-draggable'>" + draggedElt[1] + "</li>");
+                    $(this).append("<li class='border border-white bg-dark text-center text-white text-light x-draggable'><i class='fa fa - times' aria-hidden='true'></i>" + draggedElt[1] + "</li>");
                 }
                 break;
         }
@@ -274,6 +143,9 @@ function changeDatasets(type, datasets) {
             });
             return type;
             break;
+        case 'radar':
+            datasets.forEach(function (item) { item["fill"] = true; });
+            return type;
         default:
             return type;
 

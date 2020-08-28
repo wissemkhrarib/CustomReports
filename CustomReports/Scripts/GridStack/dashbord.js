@@ -47,7 +47,38 @@ var myPieChart = new Chart(pieChart, {
         ]
     }
 });
-
+var isFiltersHidden = false;
+function hideFilters() {
+    if (!isFiltersHidden) {
+        $('.filters').hide("slow");
+        isFiltersHidden = true;
+    } else {
+        $('.filters').show("slide");
+        isFiltersHidden = false;
+    }
+}
+var editMode = false;
+function allowEdit() {
+    if (!editMode) {
+        editMode = true;
+        $('.lecture').show();
+        $('.edit').hide();
+        $('.grid-stack').removeClass('edit-mode');
+        $('.grid-stack').removeClass('bg-white');
+        $('.grid-stack').addClass('bg-light');
+        grid.movable('.grid-stack-item', false);
+        grid.resizable('.grid-stack-item', false);
+    } else {
+        editMode = false;
+        $('.lecture').hide();
+        $('.edit').show();
+        $('.grid-stack').addClass('edit-mode');
+        $('.grid-stack').removeClass('bg-light');
+        $('.grid-stack').addClass('bg-white');
+        grid.movable('.grid-stack-item', true);
+        grid.resizable('.grid-stack-item', true);
+    }
+}
 var newData = {};
 function updateBlocs() {
     if (!jQuery.isEmptyObject(newData)) {
@@ -71,9 +102,7 @@ function updateBlocs() {
                             'jsonData': JSON.stringify(jsonData)
                         },
                         success: function () {
-                            swal("Poof! Your changes are saved", {
-                                icon: "success",
-                            });
+                            Notiflix.Notify.Success('All the modifications are saved !');
                         }
                     });
                 } else {
@@ -93,22 +122,35 @@ function addBloc(id) {
     })
         .then((value) => {
             if (value != null) {
-                swal(`A new bloc with ${value} as a title is added to your report ! `);
-                $.ajax({
-                    url: "/Bloc/Create",
-                    type: "GET",
-                    data: {
-                        'id': id,
-                        'title': value
+                var blocTitle = value;
+                swal("choose color ", {
+                    buttons: {
+                        red: { text: "red", value: "bg-danger" },
+                        green: { text: "green", value: "bg-success" },
+                        blue: { text: "blue", value: "bg-primary" }
                     },
-                    success: function (data) {
-                        var usefulData = jQuery.parseJSON(data);
-                        console.log(usefulData);
-                        var content = '<div class="d-flex bg-primary rounded p-1"><h1 class="font-weight-bold text-light p-1" style="font-size:15px">' + usefulData["Title"] + '</h1><a class="ml-auto btn btn-success rounded dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"aria-haspopup="true" aria-expanded="false"><span class="mr-2 d-none d-lg-inline text-gray-600 small"></span></a><div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown"><a class="dropdown-item" href="/Bloc/Edit/' + usefulData["Id"] + '">Edit</a><a class="dropdown-item" onclick="removeBloc(' + usefulData["Id"]+')"> Delete </a></div>';
-                        grid.addWidget(jQuery('<div class="grid-stack-item"  data-gs-id="' + usefulData["Id"] + '" id="' + usefulData["Id"]+'"><div class="grid-stack-item-content bg-white">' + content + '</div></div>'), 0, usefulData["Y"], 12, 4);
+                })
+                    .then((value) => {
+                        var blocHeaderColor = value != null ? value:"bg-info";
+                        swal(`A new bloc with ${blocTitle} as a title is added to your report ! `);
+                        $.ajax({
+                            url: "/Bloc/Create",
+                            type: "GET",
+                            data: {
+                                'id': id,
+                                'title': blocTitle,
+                                'headerColor': blocHeaderColor
+                            },
+                            success: function (data) {
+                                var usefulData = jQuery.parseJSON(data);
+                                console.log(usefulData);
+                                var content = '<div class="d-flex ' + blocHeaderColor + ' p-1"><h1 class="font-weight-bold text-light p-1" style="font-size:15px">' + usefulData["Title"] + '</h1><div class="row ml-auto pr-1"><a class="btn ' + blocHeaderColor + ' text-white rounded" href="/Bloc/Edit/' + usefulData["Id"] + '" title="Edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><a class="btn ' + blocHeaderColor + ' text-white rounded" onclick="removeBloc(' + usefulData["Id"] + ')" title="Delete"><i class="fa fa-trash-o" aria-hidden="true"></i></a></div></div>';
+                                grid.addWidget(jQuery('<div class="grid-stack-item"  data-gs-id="' + usefulData["Id"] + '" id="' + usefulData["Id"] + '"><div class="grid-stack-item-content bg-white">' + content + '</div></div>'), 0, usefulData["Y"], 12, 4);
 
-                    }
-                });
+                            }
+                        });
+                    });
+              
             }
             else {
                 swal(`No bloc is added`);
@@ -145,7 +187,7 @@ function removeBloc(id) {
             }
         });
 }
-var grid = GridStack.init({
+var grid = GridStack.initAll({
   alwaysShowResizeHandle: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
     navigator.userAgent
   ),
@@ -159,7 +201,8 @@ var grid = GridStack.init({
 
 //grid.on('added', function (e, items) { log('added ', items) });
 //grid.on('removed', function (e, items) { log('removed ', items) });
-grid.on('change', function (e, items) { log('change ', items) });
+var i = 0;
+grid[1].on('change', function (e, items) { log('change ', items) });
 function log(type, items) {
     var str = '';
     items.forEach(function (item) {
@@ -172,15 +215,14 @@ function log(type, items) {
         };
         str += ' (x,y)=' + item.x + ',' + item.y + ',' + item.width + ',' + item.height;
     });
+    if (i % 3 == 0) {
+        Notiflix.Notify.Warning('Click on Save Changes button before leaving this page, otherwise the changes will be lost.');
+    }
+    i++;
 
   console.log(type + items.length + ' items.' + str);
 }
+allowEdit();
 
-// TODO: switch jquery-ui out
-$('.newWidget').draggable({
-  revert: 'invalid',
-  scroll: false,
-  appendTo: 'body',
-  helper: 'clone'
-});
+
 

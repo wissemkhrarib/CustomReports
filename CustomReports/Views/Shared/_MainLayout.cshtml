@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Atlantis Lite - Bootstrap 4 Admin Dashboard</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+
+    <!-- Fonts and icons -->
+
+
+    <!-- CSS Files -->
+    <link href="~/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/GridStack/gridstack.css" rel="stylesheet" />
+
+
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow">
+        <a class="navbar-brand" href="#"><strong class="text-danger">REPO</strong><strong class="text-success">RTS</strong></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="/Report/Index">Reports <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="/Account/Logout">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <!-- End Sidebar -->
+
+    <div class="min-vh-100">
+        @RenderBody()
+    </div>
+
+
+    <!--   Core JS Files   -->
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/chart.js/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gridstack@1.1.2/dist/gridstack.all.js"></script>
+    <script src="~/Scripts/GridStack/sweetalert.min.js"></script>
+    <script src="~/Scripts/JsFunctions/JsFunctions.js"></script>
+
+    <!-- jQuery UI -->
+    <!-- jQuery Scrollbar -->
+</body>
+</html>

@@ -1,7 +1,9 @@
 ﻿using CustomReports.Data_Access;
 using CustomReports.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -12,10 +14,12 @@ namespace CustomReports.Controllers
     public class ReportController : Controller
     {
         private ReportRepository reportRepository;
+        private PageRepository pageRepository;
 
         public ReportController()
         {
             reportRepository = new ReportRepository();
+            pageRepository = new PageRepository();
         }
      
         // GET: Report
@@ -63,6 +67,22 @@ namespace CustomReports.Controllers
             reportRepository.Remove(report);
             return new EmptyResult();
         }
+        [HttpGet]
+        public JsonResult AddPage(int id)
+        {
+            var newPage = new Page();
+            newPage.ReportId = id;
+            pageRepository.Add(newPage);
+            var json = JsonConvert.SerializeObject(newPage.Id);
+            return Json(json, JsonRequestBehavior.AllowGet);
+        }
 
+        [HttpPost]
+        public ActionResult DeletePage(int id)
+        {
+            var page = pageRepository.Get(id);
+            pageRepository.Remove(page);
+            return new EmptyResult();
+        }
     }
 }

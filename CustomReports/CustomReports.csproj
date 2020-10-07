@@ -137,6 +137,7 @@
     <Compile Include="Data Access\CustomerReportRepository.cs" />
     <Compile Include="Data Access\CustomerRepository.cs" />
     <Compile Include="Data Access\IRepository.cs" />
+    <Compile Include="Data Access\PageRepository.cs" />
     <Compile Include="Data Access\ReportRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -147,6 +148,7 @@
     <Compile Include="Models\CustomerReport.cs" />
     <Compile Include="Models\Dimension.cs" />
     <Compile Include="Models\Filter.cs" />
+    <Compile Include="Models\Page.cs" />
     <Compile Include="Models\Report.cs" />
     <Compile Include="Models\ReportsDbContext.cs" />
     <Compile Include="Models\Series_Measures.cs" />
@@ -298,12 +300,6 @@
     <Content Include="Scripts\JsFunctions\JsFunctions.js" />
     <Content Include="Scripts\GridStack\lottie-player.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\chart2.js\Chart.bundle.js" />
-    <Content Include="Scripts\chart2.js\Chart.bundle.min.js" />
-    <Content Include="Scripts\chart2.js\Chart.css" />
-    <Content Include="Scripts\chart2.js\Chart.js" />
-    <Content Include="Scripts\chart2.js\Chart.min.css" />
-    <Content Include="Scripts\chart2.js\Chart.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

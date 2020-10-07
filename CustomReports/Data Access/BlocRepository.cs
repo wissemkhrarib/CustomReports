@@ -30,18 +30,14 @@ namespace CustomReports.Data_Access
         {
             return dbContext.Blocs.FirstOrDefault(b => b.Id == id);
         }
-        public Bloc GetLastBloc(int reportId)
+        public Bloc GetLastBloc(int pageId)
         {
             return dbContext.Blocs
-                .Where(b => b.ReportId == reportId)
+                .Where(b => b.PageId == pageId)
                 .OrderByDescending(b => b.H)
                 .ThenByDescending(b => b.Y)
                 .FirstOrDefault();
                 
-        }
-        public IEnumerable<Bloc> GetBlocsByReport(Report report)
-        {
-            return dbContext.Blocs.Where(b => b.Report == report);
         }
 
         public IEnumerable<Bloc> GetAll()

@@ -17,7 +17,7 @@ namespace CustomReports.Models
 
         public int Id { get; set; }
 
-        public int ReportId { get; set; }
+        public int? PageId { get; set; }
 
         [StringLength(50)]
         public string Type { get; set; }
@@ -36,7 +36,7 @@ namespace CustomReports.Models
         [StringLength(50)]
         public string HeaderColor { get; set; }
 
-        public virtual Report Report { get; set; }
+        public virtual Page Page { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Dimension> Dimensions { get; set; }

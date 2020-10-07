@@ -29,12 +29,12 @@ namespace CustomReports.Controllers
         {
             var bloc = new Bloc();
             bloc.Title = title;
-            bloc.ReportId = id;
+            bloc.PageId = id;
             bloc.HeaderColor = headerColor;
             bloc.X = 0;
             bloc.W = 12;
             bloc.H = 4;
-            var lastBloc = blocRepository.GetLastBloc(bloc.ReportId);
+            var lastBloc = blocRepository.GetLastBloc(id);
             if (lastBloc != null)
                 bloc.Y = lastBloc.Y + lastBloc.H;
             bloc.Id = blocRepository.AddAndGetId(bloc);

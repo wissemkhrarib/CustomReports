@@ -8,7 +8,7 @@ namespace CustomReports.Models
     public partial class ReportsDbContext : DbContext
     {
         public ReportsDbContext()
-            : base("name=ReportsDbContext")
+            : base("name=ReportsDb")
         {
         }
 
@@ -18,6 +18,7 @@ namespace CustomReports.Models
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Dimension> Dimensions { get; set; }
         public virtual DbSet<Filter> Filters { get; set; }
+        public virtual DbSet<Page> Pages { get; set; }
         public virtual DbSet<Report> Reports { get; set; }
         public virtual DbSet<Series_Measures> Series_Measures { get; set; }
 
@@ -71,13 +72,15 @@ namespace CustomReports.Models
                 .Property(e => e.QueryStringKey)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Report>()
-                .Property(e => e.ReportName)
-                .IsFixedLength();
+            modelBuilder.Entity<Page>()
+                .HasMany(e => e.Blocs)
+                .WithOptional(e => e.Page)
+                .WillCascadeOnDelete();
 
             modelBuilder.Entity<Report>()
-                .Property(e => e.CubeName)
-                .IsFixedLength();
+                .HasMany(e => e.Pages)
+                .WithOptional(e => e.Report)
+                .WillCascadeOnDelete();
 
             modelBuilder.Entity<Series_Measures>()
                 .Property(e => e.Type)

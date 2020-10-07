@@ -91,19 +91,19 @@
 
     <div class="page-content bg-light col m-0">
         <div class="d-flex flex-row mt-2">
-            <button class="btn btn-info mx-2 edit" onclick="updateBlocs()">
-                <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                Save Changes
-            </button>
-            <button class="btn btn-info mx-2 edit" onclick="addBloc(@Model.Id)">
+            <button class="btn btn-info mx-2 edit d-none" onclick="addPage(@Model.Id)">
                 <i class="fa fa-plus" aria-hidden="true"></i>
-                New Bloc
+                Page
+            </button>
+            <button class="btn btn-info mx-2 edit d-none" onclick="sa()">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Filter
             </button>
             <button class=" btn btn-info mx-2  ml-auto lecture" onclick="allowEdit()">
                 <i class="fa fa-pencil-square" aria-hidden="true"></i>
                 Edit Mode
             </button>
-            <button class="btn btn-info mx-2  ml-auto edit" onclick="allowEdit()">
+            <button class="btn btn-info mx-2  ml-auto edit d-none" onclick="allowEdit()">
                 <i class="fa fa-file-text-o" aria-hidden="true"></i>
                 Reading Mode
             </button>
@@ -130,74 +130,105 @@
                 </div>
             </div>
         </div>
-        <div class="row px-1 pb-0 mx-1 mt-1 mb-0">
-            <button onclick="showPage(0)" class="col btn btn-info px-2 p-2 tab current-tab"> Page  <span class="badge badge-light rounded">1</span></button>
-            <button onclick="showPage(1)" class="col btn p-2 d-tab tab text-white"> Page <span class="badge badge-light rounded">2</span></button>
-            <button onclick="showPage(2)" class="col  btn p-2 d-tab tab text-white"> Page <span class="badge badge-light rounded">3</span></button>
-            <button onclick="showPage(3)" class="col btn p-2 d-tab tab text-white"> Page <span class="badge badge-light rounded">4</span></button>
-            <button onclick="showPage(4)" class="col btn p-2 d-tab tab text-white"> Page <span class="badge badge-light rounded">5</span></button>
-            <button onclick="showPage(5)" class="col btn p-2 d-tab tab text-white"> Page <span class="badge badge-light rounded">5</span></button>
-            <button onclick="showPage(6)" class="col btn p-2 d-tab tab text-white"> Page <span class="badge badge-light rounded">5</span></button>
-            <button onclick="showPage(7)" class="col btn p-2 d-tab tab text-white"> Page <span class="badge badge-light rounded">5</span></button>
-            <button onclick="showPage(8)" class="col btn p-2 d-tab tab text-white"> Page <span class="badge badge-light rounded">5</span></button>
-            <button onclick="showPage(9)" class="col btn p-2 d-tab tab text-white"> Page <span class="badge badge-light rounded">5</span></button>
-            <button class="col btn p-2 d-tab tab text-white"> Page <span class="badge badge-light rounded">5</span></button>
-            <button class="col btn p-2 d-tab tab text-white"> Page <span class="badge badge-light rounded">5</span></button>
-            <button class="col btn p-2 d-tab tab text-white"> Page <span class="badge badge-light rounded">5</span></button>
-            <button class="col btn p-2 d-tab tab text-white"> Page <span class="badge badge-light rounded">5</span></button>
-        </div>
-        <div class="row border border-info mx-2 px-0 page">
-            <div class="col-sm-12 col-md-12 bg-white px-0 py-2 report-content">
-                <div class="grid-stack grid-stack-instance-1 edit-mode bg-white min-vh-100" data-gs-animate="yes">
-                    @foreach (var bloc in Model.Blocs)
-                    {
-                        <div class="grid-stack-item" id="@bloc.Id" data-gs-id="@bloc.Id" data-gs-x="@bloc.X" data-gs-y="@bloc.Y" data-gs-width="@bloc.W" data-gs-height="@bloc.H">
-                            <div class="grid-stack-item-content bg-light shadow">
-                                <div class="d-flex @bloc.HeaderColor p-1">
-                                    <h1 class="font-weight-bold text-light p-1" style="font-size:15px">@bloc.Title</h1>
-                                    <div class="row ml-auto pr-1">
-                                        <a class="btn @bloc.HeaderColor text-white rounded edit" href="/Bloc/Edit/@bloc.Id" title="Edit">
-                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                        </a>
-                                        <a class="btn @bloc.HeaderColor text-white rounded edit" onclick="removeBloc(@bloc.Id)" title="Delete">
-                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
+        <div class="row px-1 pb-0 mx-1 mt-1 mb-0 tabs">
+            @if (Model.Pages != null && Model.Pages.Count > 0)
+            {
+                <button onclick="showPage(0)" class="col btn btn-info px-2 p-2 tab current-tab"> Page  <span class="badge badge-light rounded">1</span></button>
+                for (int i = 1; i < Model.Pages.Count; i++)
+                {
+                    <button onclick="showPage(@i)" class="col btn p-2 d-tab tab text-white"> Page <span class="badge badge-light rounded">@(i+1)</span></button>
+                }
 
+            }
+
+        </div>
+        @if (Model.Pages != null && Model.Pages.Count > 0)
+        {
+            var pages = Model.Pages.ToList();
+            <div class="row border border-info mx-2 px-0 page" id="@pages[0].Id">
+                <div class="d-none flex-row-reverse bg-dark w-100 edit-panel">
+                    <button class="btn btn-info rounded-circle m-1" onclick="addBloc(@pages[0].Id,0)">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-info rounded-circle m-1" onclick="updateBlocs()">
+                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-info rounded-circle m-1" onclick="removePage(@pages[0].Id,0)">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-info rounded-circle m-1">
+                        <i class="fa fa-filter" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="col-sm-12 col-md-12 bg-white px-0 py-2 report-content">
+                    <div class="grid-stack grid-stack-instance-1 edit-mode bg-white min-vh-100" data-gs-animate="yes">
+                        @foreach (var bloc in pages[0].Blocs)
+                        {
+                            <div class="grid-stack-item" id="@bloc.Id" data-gs-id="@bloc.Id" data-gs-x="@bloc.X" data-gs-y="@bloc.Y" data-gs-width="@bloc.W" data-gs-height="@bloc.H">
+                                <div class="grid-stack-item-content bg-light shadow">
+                                    <div class="d-flex @bloc.HeaderColor p-1">
+                                        <h1 class="font-weight-bold text-light p-1" style="font-size:15px">@bloc.Title</h1>
+                                        <div class="row ml-auto pr-1">
+                                            <a class="btn @bloc.HeaderColor text-white rounded edit" href="/Bloc/Edit/@bloc.Id" title="Edit">
+                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                            </a>
+                                            <a class="btn @bloc.HeaderColor text-white rounded edit" onclick="removeBloc(@bloc.Id,0)" title="Delete">
+                                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                    <canvas id="chart_@bloc.Id" class="chartjs-render-monitor h-75 flex-fill" style="display: block; width: 586px; height: 380px;" width="586" height="380"></canvas>
                                 </div>
-                                <canvas id="chart_@bloc.Id" class="chartjs-render-monitor h-75 flex-fill" style="display: block; width: 586px; height: 380px;" width="586" height="380"></canvas>
                             </div>
-                        </div>
-                    }
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row border border-info mx-2 px-0 page d-none">
-            <div class="col-sm-12 col-md-12 bg-white px-0 py-2 report-content">
-                <div class="grid-stack grid-stack-instance-1 edit-mode bg-white min-vh-100" data-gs-animate="yes">
-                    @foreach (var bloc in Model.Blocs)
-                    {
-                        <div class="grid-stack-item" id="@bloc.Id" data-gs-id="@bloc.Id" data-gs-x="@bloc.X" data-gs-y="@bloc.Y" data-gs-width="@bloc.W" data-gs-height="@bloc.H">
-                            <div class="grid-stack-item-content bg-light shadow">
-                                <div class="d-flex @bloc.HeaderColor p-1">
-                                    <h1 class="font-weight-bold text-light p-1" style="font-size:15px">@bloc.Title</h1>
-                                    <div class="row ml-auto pr-1">
-                                        <a class="btn @bloc.HeaderColor text-white rounded edit" href="/Bloc/Edit/@bloc.Id" title="Edit">
-                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                        </a>
-                                        <a class="btn @bloc.HeaderColor text-white rounded edit" onclick="removeBloc(@bloc.Id)" title="Delete">
-                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
+            for (int i = 1; i < pages.Count; i++)
+            {
+                <div class="row border border-info mx-2 px-0 page d-none" id="@pages[i].Id">
+                    <div class="d-none flex-row-reverse bg-dark w-100 edit-panel">
+                        <button class="btn btn-info rounded-circle m-1" onclick="addBloc(@pages[i].Id,@i)">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                        <button class="btn btn-info rounded-circle m-1" onclick="updateBlocs()">
+                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                        </button>
+                        <button class="btn btn-info rounded-circle m-1" onclick="removePage(@pages[i].Id,@i)">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        </button>
+                        <button class="btn btn-info rounded-circle m-1">
+                            <i class="fa fa-filter" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="col-sm-12 col-md-12 bg-white px-0 py-2 report-content">
+                        <div class="grid-stack grid-stack-instance-1 edit-mode bg-white min-vh-100" data-gs-animate="yes">
+                            @foreach (var bloc in pages[i].Blocs)
+                            {
+                                <div class="grid-stack-item" id="@bloc.Id" data-gs-id="@bloc.Id" data-gs-x="@bloc.X" data-gs-y="@bloc.Y" data-gs-width="@bloc.W" data-gs-height="@bloc.H">
+                                    <div class="grid-stack-item-content bg-light shadow">
+                                        <div class="d-flex @bloc.HeaderColor p-1">
+                                            <h1 class="font-weight-bold text-light p-1" style="font-size:15px">@bloc.Title</h1>
+                                            <div class="row ml-auto pr-1">
+                                                <a class="btn @bloc.HeaderColor text-white rounded edit" href="/Bloc/Edit/@bloc.Id" title="Edit">
+                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                </a>
+                                                <a class="btn @bloc.HeaderColor text-white rounded edit" onclick="removeBloc(@bloc.Id,@i)" title="Delete">
+                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
 
+                                        </div>
+                                        <canvas id="chart_@bloc.Id" class="chartjs-render-monitor h-75 flex-fill" style="display: block; width: 586px; height: 380px;" width="586" height="380"></canvas>
+                                    </div>
                                 </div>
-                                <canvas id="chart_@bloc.Id" class="chartjs-render-monitor h-75 flex-fill" style="display: block; width: 586px; height: 380px;" width="586" height="380"></canvas>
-                            </div>
+                            }
                         </div>
-                    }
+                    </div>
                 </div>
-            </div>
-        </div>
+            }
+        }
 
     </div>
     <div class="bg-dark p-2 shadow filters " style="width:200px;">
@@ -313,27 +344,42 @@
 <script src="~/lib/twitter-bootstrap/js/bootstrap.min.js"></script>
 <script src="~/Scripts/GridStack/font-awsome.js"></script>
 <script src="~/Scripts/GridStack/notiflix-aio-2.4.0.min.js"></script>
-<script>
-    function showPage(index) {
-        var tabs = $('.tab').get();
-        var pages = $('.page').get();
-        tabs.forEach(function (item) {
-            $(item).removeClass("current-tab bg-info");
-            $(item).addClass("d-tab");
-        });
-        $(tabs[index]).addClass("bg-info current-tab");
-        $(tabs[index]).removeClass("d-tab");
-        pages.forEach(function (page) {
-            $(page).addClass("d-none");
-            $(page).removeClass("d-block");
-        });
-        $(pages[index]).removeClass("d-none");
-        $(pages[index]).addClass("d-block");
-       
-        
-        
-    }
-</script>
 <script src="~/Scripts/chart.js/Chart.min.js"></script>
 <script src="~/Scripts/GridStack/dashbord.js"></script>
+<script src="~/Scripts/GridStack/sweetalert2@9.js"></script>
+<script>
+    function sa() {
+        var filters = ["filter1", "filter2", "filter3", "filter4"];
+        var html = '';
+        filters.forEach((filter) => {
+            var filterOption = '<h3 class="text-success">  <input type="checkbox" id="' + filter + '"  />  ' + filter + '</h3>';
+            html += filterOption;
+        });
+        Swal.fire({
+            title: 'Select The Report Filters',
+            html: html,
+            confirmButtonText: 'confirmer',
+            preConfirm: () => {
+                var result = [];
+                filters.forEach((filter) => {
+                    result[filter] = Swal.getPopup().querySelector("#" + filter).checked
+                });
+
+
+                return result;
+            }
+        }).then((result) => {
+            console.log(result);
+            $(".filters div").remove();
+            var keys = Object.keys(result.value);
+            keys.forEach((key) => {
+                if (result.value[key]) {
+                    var newFilter = '<div class="card mr-2 mt-2"><div class="card-header"><div class="d-flex flex-row"><label class="switch col-lg-2"><input type="checkbox" checked><span class="slider round"></span></label><span class="col-lg-10 filter">' + key + '</span></div></div><div class="card-body"><div class="form-check"><input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked><label class="form-check-label" for="exampleRadios1">Default radio</label></div><div class="form-check"><input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2"><label class="form-check-label" for="exampleRadios2">Second radio</label></div><div class="form-check"><input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3"><label class="form-check-label" for="exampleRadios3">Disabled radio</label></div></div></div>';
+                    $(".filters").append(newFilter);
+                }
+            });
+            Swal.fire("Report Filters Updated ! ");
+    })
+    }
+</script>
 

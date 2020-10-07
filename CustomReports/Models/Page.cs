@@ -6,35 +6,20 @@ namespace CustomReports.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Filter
+    public partial class Page
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Filter()
+        public Page()
         {
-            CustomerFilters = new HashSet<CustomerFilter>();
+            Blocs = new HashSet<Bloc>();
         }
 
         public int Id { get; set; }
 
-        [StringLength(50)]
-        public string FilterName { get; set; }
-
-        [StringLength(50)]
-        public string Type { get; set; }
-
-        [StringLength(50)]
-        public string Field { get; set; }
-
-        [StringLength(50)]
-        public string Value { get; set; }
-
-        [StringLength(50)]
-        public string QueryStringKey { get; set; }
-
-        public int ReportId { get; set; }
+        public int? ReportId { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CustomerFilter> CustomerFilters { get; set; }
+        public virtual ICollection<Bloc> Blocs { get; set; }
 
         public virtual Report Report { get; set; }
     }
